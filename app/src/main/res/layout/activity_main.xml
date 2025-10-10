@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.taobao.meta.avatar.nnr.AvatarTextureView
+        android:id="@+id/surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/img_place_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_default"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/rotate_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/text_hint_background"
+        android:paddingStart="20dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="3dp"
+        android:text="@string/rotate_hint"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_download"
+        style="@style/EnableButtonStatus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/download_model"
+        android:textAllCaps="false"
+        android:textColor="#333"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_download_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        tools:text="1M/10M downloaded"
+        tools:visibility="gone" />
+
+    <Button
+        android:id="@+id/button_start_chat"
+        style="@style/EnableButtonStatus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/start_chat"
+        android:textAllCaps="false"
+        android:textColor="#333"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_home_page"
+        style="@style/EnableButtonStatus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button_start_chat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/usage_and_feedback"
+        android:textAllCaps="false"
+        android:textColor="#333"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_settings"
+        style="@style/EnableButtonStatus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button_home_page"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/settings"
+        android:textAllCaps="false"
+        android:textColor="#333"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_test_tts"
+        style="@style/EnableButtonStatus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button_settings"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="TestTts"
+        android:textAllCaps="false"
+        android:textColor="#333"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/not_available_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:visibility="visible"
+        tools:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/text_status_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:gravity="center"
+            android:text="@string/connecting"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/button_end_call"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="50dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#CCFFFFFF"
+        app:cardCornerRadius="34dp"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            app:srcCompat="@drawable/endcall" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/button_toggle_text"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="34dp"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/button_toggle_text_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/text_off" />
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@id/text_status_layout">
+
+        <TextView
+            android:id="@+id/chat_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:gravity="bottom|start"
+            android:maxHeight="200dp"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            tools:visibility="gone" />
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/debug_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/btn_voice_recording"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/voice_recording_wav"
+                style="@style/SpinKitView.Small.Wave"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#88F"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="点击交谈"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/text_voice_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="75dp"
+                android:visibility="gone"
+                tools:text="@string/release_to_send" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/test_tts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="410dp"
+            android:layout_weight="0.0"
+            android:text="Test_TTS"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/test_a2bs_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.0"
+            android:text="Test_A2BS"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/test_tts_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/test_llm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.0"
+            android:text="Test_LLM"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/test_a2bs_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/test_asr_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.0"
+            android:text="Test_ASR"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/test_llm_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/button_debug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_debug_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_debug"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="14dp"
+        android:gravity="right"
+        android:textColor="@color/black"
+        tools:text="本地LLM模型: Qwen2.5-1.5B\nLLM模型大小:1.5Gb\nTTS模型大小:777M\nASR模型大小:1.5G\nNNR文件大小:1.5G" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="@string/inference_by_mnn"
+        android:textColor="@color/black" />
+</RelativeLayout>
