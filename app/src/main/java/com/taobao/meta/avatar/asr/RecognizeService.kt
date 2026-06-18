@@ -44,7 +44,6 @@ class RecognizeService(private val activity: MainActivity) {
     private val channelConfig = AudioFormat.CHANNEL_IN_MONO
     private val audioFormat = AudioFormat.ENCODING_PCM_16BIT
     private val isRecording = AtomicBoolean(false)
-
     @Volatile
     private var isLoaded = false
     var onRecognizeText: ((String) -> Unit)? = null
@@ -90,17 +89,12 @@ class RecognizeService(private val activity: MainActivity) {
                 Manifest.permission.RECORD_AUDIO
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(
-                activity,
-                permissions,
-                REQUEST_RECORD_AUDIO_PERMISSION
-            )
+            ActivityCompat.requestPermissions(activity, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
             return false
         }
         val numBytes = AudioRecord.getMinBufferSize(sampleRateInHz, channelConfig, audioFormat)
         Log.i(TAG, "buffer size in milliseconds: ${numBytes * 1000.0f / sampleRateInHz}")
-        audioRecord =
-            AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat, numBytes * 2)
+        audioRecord = AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat, numBytes * 2)
         return true
     }
 
@@ -166,10 +160,7 @@ class RecognizeService(private val activity: MainActivity) {
         val totalDecodes = decodeCount.get().takeIf { it > 0 } ?: 1
         val avgAcceptMs = acceptTimeNs.get() / totalChunks / 1_000_000.0
         val avgDecodeMs = decodeTimeNs.get() / totalDecodes / 1_000_000.0
-        Log.i(
-            TAG,
-            "Average acceptWaveform: ${"%.2f".format(avgAcceptMs)} ms over $totalChunks chunks"
-        )
+        Log.i(TAG, "Average acceptWaveform: ${"%.2f".format(avgAcceptMs)} ms over $totalChunks chunks")
         Log.i(TAG, "Average decode: ${"%.2f".format(avgDecodeMs)} ms over $totalDecodes calls")
 
         if (utteranceCount > 0) {

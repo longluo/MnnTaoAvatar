@@ -24,10 +24,10 @@ class NnrAvatarRender(
     private val firstInitComplete = CompletableDeferred<Boolean>()
     private var audioBlendShapePlayer: AudioBlendShapePlayer? = null
     private var initStarted = false
-    private var activeSurface: Surface? = null
+    private var activeSurface:Surface?= null
 
     //for DEBUG save
-    private var audioBsToSave: AudioBlendShape? = null
+    private var audioBsToSave:AudioBlendShape? = null
     private var nextDebugFrameIndex = 0L
     private var hasDownloadComplete = false
 
@@ -52,13 +52,13 @@ class NnrAvatarRender(
         })
     }
 
-    private fun destroyRender(surface: Surface) {
+    private fun destroyRender(surface:Surface) {
         surfaceCreated = false
         resourceLoaded = false
         destroy()
     }
 
-    private fun initRender(surface: Surface) {
+    private fun initRender(surface:Surface) {
         Log.d(TAG, "initRender modelDir: $modelDir")
         if (!File(modelDir).exists()) {
             Log.e(TAG, "modelDir not exists")
@@ -68,16 +68,15 @@ class NnrAvatarRender(
         nnrRuntimeNative = nativeCreateNNR()
         val cachePath = avatarTextureView.context.cacheDir.absolutePath + "/nnr_cache"
         File(cachePath).mkdirs()
-        nativeInitNNR(
-            nnrRuntimeNative, surface, modelDir,
-            cachePath
-        )
+        nativeInitNNR(nnrRuntimeNative, surface, modelDir,
+            cachePath)
         CoroutineScope(Dispatchers.IO).launch {
             loadResources()
             if (!firstInitComplete.isCompleted) {
                 firstInitComplete.complete(true)
             }
         }
+
     }
 
     fun setAudioBlendShapePlayer(audioBlendShapePlayer: AudioBlendShapePlayer) {
@@ -129,19 +128,16 @@ class NnrAvatarRender(
     private val isNNRReady: Boolean
         get() = nativeIsNNRReady(nnrRuntimeNative)
 
-    private fun updateNNRScene(
-        cameraControl: CameraControlData,
-        isPlaying: Boolean,
-        currentTimeMills: Long,
-        totalTimeMills: Long,
-        isBuffering: Boolean,
-        smoothToIdlePercent: Float,
-        smoothToTalkPercent: Float,
-        forceFrameIndex: Long
-    ) {
+    private fun updateNNRScene(cameraControl: CameraControlData,
+                               isPlaying:Boolean,
+                               currentTimeMills: Long,
+                               totalTimeMills: Long,
+                               isBuffering:Boolean,
+                               smoothToIdlePercent: Float,
+                               smoothToTalkPercent: Float,
+                               forceFrameIndex: Long) {
 
-        nativeUpdateNNRScene(
-            nnrRuntimeNative,
+        nativeUpdateNNRScene(nnrRuntimeNative,
             cameraControl,
             isPlaying,
             currentTimeMills,
@@ -149,8 +145,7 @@ class NnrAvatarRender(
             isBuffering,
             smoothToIdlePercent,
             smoothToTalkPercent,
-            forceFrameIndex
-        )
+            forceFrameIndex)
     }
 
     fun reset() {
@@ -175,35 +170,32 @@ class NnrAvatarRender(
         )
     }
 
-    fun doFrameDebug(): Boolean {
+    fun doFrameDebug():Boolean {
         if (audioBsToSave == null) {
             return false
         }
         if (nextDebugFrameIndex >= audioBsToSave!!.a2bs.frame_num) {
             return false
         }
-        Log.d(
-            TAG, "doFrameDebugSave $nextDebugFrameIndex " +
-                    "frameCount: ${audioBsToSave!!.a2bs.frame_num}" +
-                    "audioCount: ${audioBsToSave!!.audio.size}" +
-                    "text: ${audioBsToSave!!.text}"
+        Log.d(TAG, "doFrameDebugSave $nextDebugFrameIndex " +
+                "frameCount: ${audioBsToSave!!.a2bs.frame_num}" +
+                "audioCount: ${audioBsToSave!!.audio.size}" +
+                "text: ${audioBsToSave!!.text}"
         )
-        this.updateNNRScene(
-            avatarTextureView.cameraCtrlData!!,
-            audioBlendShapePlayer?.isPlaying ?: false,
-            audioBlendShapePlayer?.currentTime ?: 0L,
-            audioBlendShapePlayer?.totalTime ?: 0L,
-            audioBlendShapePlayer?.isBuffering ?: false,
+        this.updateNNRScene(avatarTextureView.cameraCtrlData!!,
+            audioBlendShapePlayer?.isPlaying?:false,
+            audioBlendShapePlayer?.currentTime?:0L,
+            audioBlendShapePlayer?.totalTime?:0L,
+            audioBlendShapePlayer?.isBuffering?:false,
             -1f,
             -1f,
-            nextDebugFrameIndex
-        )
+            nextDebugFrameIndex)
         nextDebugFrameIndex++
         this.render()
         return true
     }
 
-    fun doFrame(): Boolean {
+    fun doFrame():Boolean {
         if (isNNRReady) {
             if (MHConfig.DebugConfig.DebugWriteBlendShape) {
                 return doFrameDebug()
@@ -217,16 +209,14 @@ class NnrAvatarRender(
 //                        "position ${audioBlendShapePlayer?.currentHeadPosition}  " +
 //                "currentPlayingText: ${audioBlendShapePlayer?.currentPlayingText}"
 //            )
-            this.updateNNRScene(
-                avatarTextureView.cameraCtrlData!!,
-                audioBlendShapePlayer?.isPlaying ?: false,
-                audioBlendShapePlayer?.currentTime ?: 0L,
-                audioBlendShapePlayer?.totalTime ?: 0L,
-                audioBlendShapePlayer?.isBuffering ?: false,
-                playingStatus?.smoothToIdlePercent ?: -1f,
-                playingStatus?.smoothToTalkPercent ?: -1f,
-                -1
-            )
+            this.updateNNRScene(avatarTextureView.cameraCtrlData!!,
+                audioBlendShapePlayer?.isPlaying?:false,
+                audioBlendShapePlayer?.currentTime?:0L,
+                audioBlendShapePlayer?.totalTime?:0L,
+                audioBlendShapePlayer?.isBuffering?:false,
+                playingStatus?.smoothToIdlePercent?:-1f,
+                playingStatus?.smoothToTalkPercent?:-1f,
+                -1)
             this.render()
 //            Log.v(TAG, "updateNNRScene cost ${System.currentTimeMillis() - startTime} ms")
             return true
@@ -242,12 +232,7 @@ class NnrAvatarRender(
         private external fun nativeCreateNNR(): Long
 
         @JvmStatic
-        private external fun nativeInitNNR(
-            nativePtr: Long,
-            surface: Surface,
-            modelDir: String,
-            cacheDir: String
-        )
+        private external fun nativeInitNNR(nativePtr: Long, surface: Surface, modelDir: String, cacheDir: String)
 
         @JvmStatic
         private external fun nativeDestroy(nativePtr: Long)
@@ -282,7 +267,7 @@ class NnrAvatarRender(
             renderSceneFileName: String,
             skyboxSceneFileName: String,
             deformParamFileName: String,
-            chatStatusFileName: String
+            chatStatusFileName:String
         ): Boolean
     }
 }

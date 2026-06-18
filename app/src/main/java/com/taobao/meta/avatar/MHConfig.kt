@@ -3,6 +3,7 @@
 // ited All rights reserved.
 package com.taobao.meta.avatar
 
+import android.bluetooth.BluetoothClass.Device
 import com.taobao.meta.avatar.utils.DeviceUtils
 
 
@@ -19,9 +20,12 @@ object MHConfig {
     val TTS_MODEL_DIR
         get() = "${BASE_DIR}/bert-vits2-MNN/"
 
+    val TTS_MODEL_DIR_EN
+        get() = "${BASE_DIR}/supertonic-tts-mnn/"
+
     val A2BS_MODEL_DIR
         get() = "${BASE_DIR}/UniTalker-MNN/"
-
+//    /data/data/com.taobao.meta.avatar/files/.mnnmodels/modelscope/supertonic-tts-mnn
     val LLM_MODEL_DIR
         get() = "${BASE_DIR}/Qwen2.5-1.5B-Instruct-MNN"
 
@@ -38,7 +42,7 @@ object MHConfig {
 
     const val DEBUG_LOG_VERBOSE = false
 
-    object DebugConfig {
+    object DebugConfig  {
         val DebugWriteBlendShape = false
     }
 }

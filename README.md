@@ -5,8 +5,8 @@
   <img width="20%" alt="Icon"  src="https://meta.alicdn.com/data/mnn/avatar/avatar_demo.gif" style="margin: 0 10px;">
 </p>
 
-+ [中文](./README_CN.md)
-+ [Download](#releases)
++ [简体中文版本](./README_CN.md) | [繁體中文版本](./README_TW.md)
++ [Download](#releases) 
 
 Welcome to **MNN-TaoAvatar App**, a full-featured mobile app about the [TaoAvatar paper (arXiv:2503.17032v1)](https://arxiv.org/html/2503.17032v1). This project brings multimodal AI avatars to life directly on Android devices, running **all models locally**, including:
 
@@ -64,6 +64,9 @@ cd apps/Android/MnnTaoAvatar
 ```
 
 ## Releases
+## Version 0.0.2
++ Click here to [download](https://meta.alicdn.com/data/mnn/avatar/mnn_taoavatar_0_0_2.apk)
++ support supertonic tts for TaoAvatar
 ## Version 0.0.1
 + Click here to [download](https://meta.alicdn.com/data/mnn/avatar/mnn_taoavatar_0_0_1.apk)
 + this is our first public released version; you can chat with 3d avatar in the app with asr and tts; if you have any questions, please feel free to open an issue for assistance.

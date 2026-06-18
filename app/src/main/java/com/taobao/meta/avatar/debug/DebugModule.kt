@@ -54,8 +54,7 @@ class DebugModule {
         llmButton = activity.findViewById(R.id.test_llm_button)
         a2BSService = activity.getA2bsService()
         ttsService = activity.getTtsService()
-        activity.findViewById<View>(R.id.test_asr_button)
-            .setOnClickListener { v: View? -> testAsr() }
+        activity.findViewById<View>(R.id.test_asr_button).setOnClickListener { v: View? -> testAsr() }
         llmButton.setOnClickListener {
             testLlm()
         }
@@ -103,29 +102,27 @@ class DebugModule {
 //            "街灯次第亮起",
 //            "为这座城市描绘出另一番景象。",
 //        ))
-        testAudioBlendShapePlayer(
-            audioBsPlayer, listOf(
-                "123456789",
-                "I am a english talker"
-            )
-        )
+        testAudioBlendShapePlayer(audioBsPlayer, listOf(
+            "123456789",
+            "I am a english talker"
+        ))
     }
 
-    fun testAudioBlendShapePlayer(audioBsPlayer: AudioBlendShapePlayer, texts: List<String>) {
+    fun testAudioBlendShapePlayer(audioBsPlayer:AudioBlendShapePlayer, texts: List<String>) {
         audioBsPlayer.playSession(System.currentTimeMillis(), texts)
     }
 
-    private suspend fun testTts(str: String) {
+    private suspend fun testTts(str:String) {
         if (TTS_USE_SHERPA) {
             CoroutineScope(Dispatchers.IO).launch {
                 testKokoroZhEn()
             }
             return
         }
-        var ttsService: TtsService? = null
+        var ttsService:TtsService? = null
         if (DEBUG_DISABLE_SERVICE_AUTO_START) {
             ttsService = TtsService()
-            ttsService.init(MHConfig.TTS_MODEL_DIR)
+            ttsService.init(MHConfig.TTS_MODEL_DIR, context = activity)
             ttsService.waitForInitComplete()
         } else {
             ttsService = activity.getTtsService()
@@ -217,21 +214,21 @@ class DebugModule {
     }
 
     suspend fun testKokoroZhEn() {
-        ttsService.init(MHConfig.TTS_MODEL_DIR)
+        ttsService.init(MHConfig.TTS_MODEL_DIR, context = activity)
         ttsService.waitForInitComplete()
         val tts_path = "/data/local/tmp/kokoro-multi-lang-v1_0"
         val config = OfflineTtsConfig(
-            model = OfflineTtsModelConfig(
-                kokoro = OfflineTtsKokoroModelConfig(
-                    model = "${tts_path}/model.mnn",
-                    voices = "${tts_path}/voices.bin",
-                    tokens = "${tts_path}/tokens.txt",
-                    dataDir = "${tts_path}/espeak-ng-data",
-                    dictDir = "${tts_path}/dict",
-                    lexicon = "${tts_path}/lexicon-us-en.txt,${tts_path}/lexicon-zh.txt",
+            model= OfflineTtsModelConfig(
+                kokoro= OfflineTtsKokoroModelConfig(
+                    model="${tts_path}/model.mnn",
+                    voices="${tts_path}/voices.bin",
+                    tokens="${tts_path}/tokens.txt",
+                    dataDir="${tts_path}/espeak-ng-data",
+                    dictDir="${tts_path}/dict",
+                    lexicon="${tts_path}/lexicon-us-en.txt,${tts_path}/lexicon-zh.txt",
                 ),
-                numThreads = 2,
-                debug = true,
+                numThreads=2,
+                debug=true,
             ),
         )
         val tts = ttsService
@@ -252,8 +249,8 @@ class DebugModule {
             "为这座城市描绘出另一番景象。",
         ).forEach {
             CoroutineScope(Dispatchers.Default).launch {
-                Log.d(TAG, "generate tts in thread: ${Thread.currentThread().name}")
-                tts.processSherpa(it, 0)
+               Log.d(TAG, "generate tts in thread: ${Thread.currentThread().name}")
+               tts.processSherpa(it, 0)
             }
         }
 //        val audioChunksPlayer = AudioChunksPlayer()

@@ -30,3 +30,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TaoAvatar"
 include ':app'
+include ':model_downloader'

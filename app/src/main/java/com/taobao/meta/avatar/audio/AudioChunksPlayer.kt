@@ -22,8 +22,8 @@ class AudioChunksPlayer {
     private var channelConfig = AudioFormat.CHANNEL_OUT_MONO
     private var totalSize = 0
     private var playbackSpeed = 1.0f
-    private var playJob: Job = Job()
-    private val executor: ThreadPoolExecutor =
+    private var playJob:Job = Job()
+    private val executor:ThreadPoolExecutor =
         ThreadPoolExecutor(1, 5, 2L, TimeUnit.SECONDS, LinkedBlockingQueue())
             .apply {
                 this.allowCoreThreadTimeOut(true)
@@ -61,12 +61,10 @@ class AudioChunksPlayer {
             audioFormat
         )
         audioTrack = AudioTrack.Builder()
-            .setAudioFormat(
-                AudioFormat.Builder()
-                    .setEncoding(audioFormat)
-                    .setSampleRate(_sampleRate)
-                    .setChannelMask(channelConfig).build()
-            )
+            .setAudioFormat(AudioFormat.Builder()
+                .setEncoding(audioFormat)
+                .setSampleRate(_sampleRate)
+                .setChannelMask(channelConfig).build())
             .setBufferSizeInBytes(minBufferSize).build()
 
         if (state != AudioTrack.STATE_UNINITIALIZED) {
@@ -115,11 +113,9 @@ class AudioChunksPlayer {
         }
         suspendCoroutine { continuation ->
             audioTrack!!.setNotificationMarkerPosition(totalSize)
-            audioTrack!!.setPlaybackPositionUpdateListener(object :
-                AudioTrack.OnPlaybackPositionUpdateListener {
+            audioTrack!!.setPlaybackPositionUpdateListener(object : AudioTrack.OnPlaybackPositionUpdateListener {
                 override fun onPeriodicNotification(track: AudioTrack?) {
                 }
-
                 override fun onMarkerReached(track: AudioTrack?) {
                     Log.d(TAG, "Audio track end of file reached ${track?.playbackHeadPosition}")
                     continuation.resume(true)
@@ -140,13 +136,11 @@ class AudioChunksPlayer {
         return totalSize
     }
 
-    fun setMarkerSizeListener(size: Int, listener: (Int) -> Unit) {
+    fun setMarkerSizeListener(size:Int, listener: (Int) -> Unit) {
         audioTrack!!.setNotificationMarkerPosition(size)
-        audioTrack!!.setPlaybackPositionUpdateListener(object :
-            AudioTrack.OnPlaybackPositionUpdateListener {
+        audioTrack!!.setPlaybackPositionUpdateListener(object : AudioTrack.OnPlaybackPositionUpdateListener {
             override fun onPeriodicNotification(track: AudioTrack?) {
             }
-
             override fun onMarkerReached(track: AudioTrack?) {
                 Log.d(TAG, "track state: ${audioTrack?.state}")
                 if (track?.state == AudioTrack.STATE_UNINITIALIZED) {
@@ -254,7 +248,7 @@ class AudioChunksPlayer {
             audioTrack!!.playState
         } else {
             AudioTrack.ERROR
-        }
+    }
 
     val state: Int
         get() {
@@ -264,7 +258,7 @@ class AudioChunksPlayer {
                 Log.e(TAG, "AudioTrack is NOT initialized.")
                 return AudioTrack.STATE_UNINITIALIZED
             }
-        }
+    }
 
     fun totalTime(): Long {
         return if (isPlaying) ((totalSize * 1000L / channelCount) / _sampleRate) else 0
